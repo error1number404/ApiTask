@@ -76,6 +76,7 @@ class Ui_MainWindow(object):
         self.SeekForRequest_pushButton.clicked.connect(self.change_map)
         self.clearRequestResult_pushButton.clicked.connect(self.clear_point)
         self.setMouseTracking(True)
+        self.ShowIndex_comboBox.currentTextChanged.connect(self.update_adress)
         self.json = 0
         self.map_params = {}
         self.delta_0 = 0
@@ -167,6 +168,8 @@ class Ui_MainWindow(object):
 
     def clear_point(self):
         self.pt = ''
+        self.address_TextEdit.clear()
+        self.address_TextEdit.setPlainText('Текущий адрес:')
         self.update_map()
 
     def keyPressEvent(self, event):
