@@ -74,7 +74,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.SeekForRequest_pushButton.clicked.connect(self.change_map)
-        self.clearRequestResult_pushButton.clicked.connect(partial(self.change_map, True))
+        self.clearRequestResult_pushButton.clicked.connect(self.clear_point)
         self.setMouseTracking(True)
         self.json = 0
         self.map_params = {}
@@ -82,6 +82,8 @@ class Ui_MainWindow(object):
         self.delta_1 = 0
         self.ll_0 = 0
         self.ll_1 = 0
+        self.request_lineEdit.setText('Барнаул')
+        self.change_map()
 
     def lonlat_distance(self, a, b):
         degree_to_meters_factor = 111 * 1000  # 111 километров в метрах
@@ -157,16 +159,15 @@ class Ui_MainWindow(object):
             file.close()
         self.map_display_label.setPixmap(QtGui.QPixmap("map.png"))
 
-    def change_map(self, clearresult=False):
+    def change_map(self):
         with open(f"map.png", "wb") as file:
-            if not clearresult:
-                file.write(self.return_api(self.request_lineEdit.text()).content)
-            else:
-                file.write(self.return_api('Москва').content)
-                self.request_lineEdit.setText('')
-                self.update_adress()
+            file.write(self.return_api(self.request_lineEdit.text()).content)
             file.close()
         self.map_display_label.setPixmap(QtGui.QPixmap("map.png"))
+
+    def clear_point(self):
+        self.pt = ''
+        self.update_map()
 
     def keyPressEvent(self, event):
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
