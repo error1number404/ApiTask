@@ -74,7 +74,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.SeekForRequest_pushButton.clicked.connect(self.change_map)
-        self.clearRequestResult_pushButton.clicked.connect(partial(self.change_map,True))
+        self.clearRequestResult_pushButton.clicked.connect(partial(self.change_map, True))
         self.setMouseTracking(True)
         self.json = 0
         self.map_params = {}
@@ -157,7 +157,7 @@ class Ui_MainWindow(object):
             file.close()
         self.map_display_label.setPixmap(QtGui.QPixmap("map.png"))
 
-    def change_map(self,clearresult=False):
+    def change_map(self, clearresult=False):
         with open(f"map.png", "wb") as file:
             if not clearresult:
                 file.write(self.return_api(self.request_lineEdit.text()).content)
@@ -184,16 +184,16 @@ class Ui_MainWindow(object):
                 self.delta_1 = 0.001
                 self.update_map()
         elif event.key() == QtCore.Qt.Key_Left:
-            self.ll_0 -= 0.01
+            self.ll_0 -= self.delta_0
             self.update_map()
         elif event.key() == QtCore.Qt.Key_Right:
-            self.ll_0 += 0.01
+            self.ll_0 += self.delta_0
             self.update_map()
         elif event.key() == QtCore.Qt.Key_Up:
-            self.ll_1 += 0.01
+            self.ll_1 += self.delta_1
             self.update_map()
         elif event.key() == QtCore.Qt.Key_Down:
-            self.ll_1 -= 0.01
+            self.ll_1 -= self.delta_1
             self.update_map()
 
     def mousePressEvent(self, event):
