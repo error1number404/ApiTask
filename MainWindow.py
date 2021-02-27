@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.map_display_label = QtWidgets.QLabel(self.centralwidget)
-        self.map_display_label.setGeometry(QtCore.QRect(0, 0, 600, 450))
+        self.map_display_label.setGeometry(QtCore.QRect(0, 0, 600, 500))
         self.map_display_label.setText("")
         self.map_display_label.setObjectName("map_display_label")
         self.map_type_combobox = QtWidgets.QComboBox(self.centralwidget)
@@ -52,8 +52,14 @@ class Ui_MainWindow(object):
         self.address_TextEdit.setGeometry(QtCore.QRect(610, 190, 271, 121))
         self.address_TextEdit.setObjectName("address_TextEdit")
         self.ShowIndex_comboBox = QtWidgets.QComboBox(self.centralwidget)
-        self.ShowIndex_comboBox.setGeometry(QtCore.QRect(610, 160, 240, 22))
+        self.ShowIndex_comboBox.setGeometry(QtCore.QRect(610, 160, 171, 22))
         self.ShowIndex_comboBox.setObjectName("ShowIndex_comboBox")
+        self.org_type_lineEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.org_type_lineEdit.setGeometry(QtCore.QRect(610, 340, 211, 21))
+        self.org_type_lineEdit.setObjectName("org_type_lineEdit")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(610, 320, 201, 16))
+        self.label.setObjectName("label")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 900, 21))
@@ -229,7 +235,7 @@ class Ui_MainWindow(object):
 
                 search_params = {
                     "apikey": api_key,
-                    'text': 'ООО',
+                    'text': self.org_type_lineEdit.text(),
                     "lang": "ru_RU",
                     "ll": address_ll,
                     "type": "biz"
@@ -242,6 +248,8 @@ class Ui_MainWindow(object):
                 if self.lonlat_distance([new_ll_0, new_ll_1], [point[0], point[1]]) < 51:
                     self.pt = f'{point[0]},{point[1]},pm2dgl'
                     self.update_map()
+                    self.address_TextEdit.clear()
+                    self.address_TextEdit.setPlainText('Текущий адрес:')
                 else:
                     self.pt = ''
                     self.update_map()
@@ -255,3 +263,5 @@ class Ui_MainWindow(object):
         self.clearRequestResult_pushButton.setText(_translate("MainWindow", "Сброс результатов поиска"))
         self.zoomPowerLabel.setText(_translate("MainWindow", "Сила отдаления"))
         self.address_TextEdit.setPlainText(_translate("MainWindow", "Текущий адрес:"))
+        self.org_type_lineEdit.setText(_translate("MainWindow", "Аптека"))
+        self.label.setText(_translate("MainWindow", "Тип организации для поиска"))
